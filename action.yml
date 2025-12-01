@@ -1,0 +1,32 @@
+# action.yml
+name: "Selenium Runner."
+description: "Run Selenium pytest tests and upload HTML report as an artifact."
+author: "Kulbhushan Mayer"
+inputs:
+  APP_BASE_URL:
+    description: 'Application base URL for Testing.'
+    required: true
+    type: string
+  REPORT_PATH:
+    description: 'Path to save the test report (relative to workspace).'
+    required: false
+    default: 'reports/selenium-report.html'
+    type: string
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v5
+
+    - name: Run Selenium Tests
+      env:
+        APP_BASE_URL: ${{ inputs.APP_BASE_URL }}
+      run: |
+        mkdir -p "$(dirname "${{ inputs.REPORT_PATH }}")"
+        pytest tests/ --html="${{ inputs.REPORT_PATH }}" --self-contained-html
+
+    - name: Upload Selenium Test Report
+      uses: actions/upload-artifact@v5
+      with:
+        name: selenium-test-report-${{ inputs.ENVIRONMENT }}
+        path: ${{ inputs.REPORT_PATH }}

@@ -1,0 +1,14 @@
+name: Use Selenium Runner (example)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-tests:
+    runs-on: github-actions-scaleset-demo
+    steps:
+      - name: Run Selenium tests via shared action
+        uses: your-github-username/selenium-runner-action@v1
+        with:
+          APP_BASE_URL: "http://thinknyxapp-svc.staging.app"
+          REPORT_PATH: "reports/selenium-report.html"

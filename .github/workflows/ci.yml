@@ -7,6 +7,7 @@ jobs:
   run-tests:
     runs-on: github-actions-scaleset-demo
     steps:
+      - uses: actions/checkout@v5
       - name: Run Selenium tests via shared action
         uses: ./
         with:

@@ -19,6 +19,7 @@ runs:
       uses: actions/checkout@v5
 
     - name: Run Selenium Tests
+      shell: bash
       env:
         APP_BASE_URL: ${{ inputs.APP_BASE_URL }}
       run: |
